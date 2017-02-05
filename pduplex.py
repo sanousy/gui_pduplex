@@ -142,7 +142,7 @@ def duplex_print(files, printer, size):
     print('[*] Printing first side. Please wait...')
     print_pdf(printer, files[0], size)
     try:
-        input('[-] When the first side has finished printing, place the pages back into the paper tray'
+        input('[-] When the first side has finished printing, place the pages back into the paper tray '
               'and press [ENTER]: ')
     except:
         pass
