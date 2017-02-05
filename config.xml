@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<transform>
+    <out order="1" pages="even" rotate="180" reverse="True"/>
+    <out order="2" pages="odd"/>
+    <size>a4</size>
+    <printer>HP_LaserJet_P1006</printer>
+</transform>
