@@ -17,7 +17,9 @@ size = "A4"
 output_files = []
 printers = []
 config_file = 'config.xml'
-
+isRotateFirstFace = False
+isReverseFirstFace = False
+filepath = ""
 
 def read_config():
     """
@@ -45,23 +47,30 @@ def read_config():
         transforms.sort(key=lambda x: x['order'])
     return transforms, printer, size
 
-def write_config(printer, size ):
+def write_config():
+    global current_printer
+    global size
+    global isReverseFirstFace
+    global isRotateFirstFace
     tree = ET.parse('config.xml')
     root = tree.getroot()
     for item in root.findall("printer"):
         print( item.tag )
         print( item.text )
-        item.text = printer
+        item.text = current_printer
     for item in root.findall("size"):
         print( item.tag )
         print( item.text )
         item.text = size
-        
+
     with open('config.xml', 'wb') as f:
         tree.write(f, encoding='utf-8')
 
 
-def transform_pdf(filepath, transforms):
+def transform_pdf(transforms):
+    global filepath
+    global isRotateFirstFace
+    global isReverseFirstFace
     """
     Apply the given transformations, in order, to the PDF given
     :param filepath: The path of the PDF
@@ -81,9 +90,18 @@ def transform_pdf(filepath, transforms):
             page_nums = list(odd_pages) if transform['pages'] == 'odd' else list(even_pages)
             pages = [reader.getPage(page) for page in page_nums]
             # Rotate if requested
-            rotation = int(transform.get('rotate', 0))
+#            rotation = int(transform.get('rotate', 0))
+            rotation = 0
+            reverse = False
+            if transform['pages'] == 'even':
+                if isRotateFirstFace :
+                    rotation = 180
+                reverse = isReverseFirstFace 
+
+            print(rotation)
+            print(isReverseFirstFace)
             # Reverse order of pages if requested
-            reverse = bool(transform.get('reverse', False))
+            #reverse = bool(transform.get('reverse', False))
             # Append blank page before/after the pages
             add_blank = transform.get('addBlank', '').lower()
             if add_blank and add_blank not in ['before', 'after']:
@@ -163,8 +181,8 @@ def print_pdf(printer, filepath, size):
 
 def fcDialog_onFileset(P1, P2):
     global output_files
+    global filepath
     filepath = fcDialog.get_filename()
-    output_files = transform_pdf(filepath, transforms)
     btnPrint1.set_sensitive(True)
     return
 
@@ -173,7 +191,7 @@ def btnPrinters_onChanged(P1):
     global current_printer
     index = btnPrinters.get_active()
     current_printer = printers[index]
-    write_config(current_printer, size)
+    write_config()
     return
 
 def btnSizes_onChanged(P1):
@@ -181,12 +199,15 @@ def btnSizes_onChanged(P1):
     global current_printer
     index = btnSizes.get_active()
     size= sizes[index]
-    write_config(current_printer, size)
+    write_config()
     return
 
 def btnPrint1_onClicked(P1, P2):
     global output_files
     global current_printer
+    global filepath
+    global size
+    output_files = transform_pdf(transforms)
     print_pdf(current_printer, output_files[0], size)
     btnPrint2.set_sensitive(True)
     return
@@ -195,6 +216,14 @@ def btnPrint2_onClicked(P1, P2):
     global output_files
     global current_printer
     print_pdf(current_printer, output_files[1], size)
+    return
+def cbRotate_onChecked(P1, P2):
+    global isRotateFirstFace 
+    isRotateFirstFace = cbRotate.get_active()
+    return
+def cbReverse_onChecked(P1, P2):
+    global isReverseFirstFace
+    isReverseFirstFace = cbReverse.get_active()
     return
 def btnClose_onClicked(P1, P2):
     for file in output_files:
@@ -216,11 +245,15 @@ if __name__ == '__main__':
     btnClose = builder.get_object("btnClose")
     btnPrinters = builder.get_object("btnPrinters")
     btnSizes = builder.get_object("btnSizes")
+    cbRotate = builder.get_object("cbRotate")
+    cbReverse = builder.get_object("cbReverse")
     window.connect("destroy", Gtk.main_quit)
     fcDialog.connect("file-set",fcDialog_onFileset,None)
     btnPrint1.connect("clicked",btnPrint1_onClicked,None)
     btnPrint2.connect("clicked",btnPrint2_onClicked,None)
     btnClose.connect("clicked",btnClose_onClicked,None)
+    cbRotate.connect("toggled",cbRotate_onChecked, None)
+    cbReverse.connect("toggled",cbReverse_onChecked, None)
     
     printer_store = Gtk.ListStore(str)
     active = 0

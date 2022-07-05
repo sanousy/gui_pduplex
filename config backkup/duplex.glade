@@ -41,7 +41,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="tooltip-text" translatable="yes">Click close when you finish.</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -84,7 +83,6 @@
                 <property name="name">fcDialog</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Only pdf allowed.</property>
                 <property name="filter">filefilter1</property>
                 <property name="title" translatable="yes"/>
                 <property name="width-chars">27</property>
@@ -212,7 +210,6 @@
                 <property name="name">btnSizes</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Select the paper size ( i.e. A4) </property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -263,7 +260,6 @@
                 <property name="name">btnPrinters</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Select your printer name, if no printer installed on your system, this list could be empty then.</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -291,7 +287,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="tooltip-text" translatable="yes">When selected, this choice help you not to rotate pages, they are already rotated, so you take them as is (face-down), and put them back into the tray.</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
@@ -318,7 +313,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="tooltip-text" translatable="yes">This option is required to be on, in case of duplex manual printing.</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
