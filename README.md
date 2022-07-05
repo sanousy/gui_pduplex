@@ -5,7 +5,8 @@ This version has gpduplex.py, which wraps the same original functionality of com
 
 below how it should look like:
 
-![Screenshot at 2022-06-21 22-56-24](https://user-images.githubusercontent.com/19352122/174886830-5648ee47-ebbd-47a3-996a-5c907fd693db.png)
+![Screenshot at 2022-07-06 00-54-49](https://user-images.githubusercontent.com/19352122/177423538-d2670e6b-07a9-403c-9eb8-b04b9085c8bd.png)
+
 
 all you need, is to print the first face, and then take the printed papers, and put them back into the printer feeder, then click the second print button, happy printing.
 
